@@ -1,8 +1,6 @@
-using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using QuizMaster.Data;
 using QuizMaster.Models;
-using QuizMaster.Models.ViewModel.Quiz;
 using QuizMaster.Repositories.Interfaces;
 
 namespace QuizMaster.Repositories;
@@ -10,24 +8,30 @@ namespace QuizMaster.Repositories;
 public class QuizRepository : IQuizRepository
 {
     private readonly ApplicationDbContext _dbContext;
-    
+
     public QuizRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    public Task CreateQuizAsync(CreateQuizViewModel model, ClaimsPrincipal user)
+    public async Task AddAsync(Quiz quiz)
     {
-        throw new NotImplementedException();
+        _dbContext.Quizzes.Add(quiz);
+        await _dbContext.SaveChangesAsync();
     }
 
-    public Task<IEnumerable<QuizListItemViewModel>> GetTeacherQuizzesAsync(ClaimsPrincipal user)
+    public async Task<IEnumerable<Quiz>> GetByTeacherIdAsync(string teacherId)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Quizzes
+            .Where(q => q.TeacherId == teacherId)
+            .ToListAsync();
     }
 
-    public Task<QuizDetailsViewModel> GetQuizDetailsAsync(int quizId)
+    public async Task<Quiz?> GetByIdAsync(int quizId)
     {
-        throw new NotImplementedException();
+        return await _dbContext.Quizzes
+            .Include(q => q.Questions)
+            .ThenInclude(q => q.AnswerOptions)
+            .FirstOrDefaultAsync(q => q.Id == quizId);
     }
 }

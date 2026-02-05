@@ -10,4 +10,6 @@ public class CreateQuizViewModel
     
     [StringLength(500)]
     public string Description { get; set; }
+    
+    public DateTime ExpiresAt { get; set; }
 }

@@ -6,7 +6,7 @@ namespace QuizMaster.Repositories.Interfaces;
 
 public interface IQuizRepository
 {
-    Task CreateQuizAsync(CreateQuizViewModel model, ClaimsPrincipal user);
-    Task<IEnumerable<QuizListItemViewModel>> GetTeacherQuizzesAsync(ClaimsPrincipal user);
-    Task<QuizDetailsViewModel> GetQuizDetailsAsync(int quizId);
+    Task AddAsync(Quiz quiz);
+    Task<IEnumerable<Quiz>> GetByTeacherIdAsync(string teacherId);
+    Task<Quiz?> GetByIdAsync(int quizId);
 }
