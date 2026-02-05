@@ -15,6 +15,7 @@ public class AccountController : Controller
     }
 
     public IActionResult Login() => View();
+    public IActionResult Register() => View();
 
 
     [HttpPost]
@@ -33,7 +34,8 @@ public class AccountController : Controller
 
         return RedirectToAction("Index", "Home");
     }
-
+    
+    [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
         if (!ModelState.IsValid)
@@ -48,6 +50,8 @@ public class AccountController : Controller
         return RedirectToAction("Index", "Home");
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
         await _authService.LogoutAsync();
