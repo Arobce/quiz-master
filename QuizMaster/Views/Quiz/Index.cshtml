@@ -29,6 +29,13 @@
                     <span>@quiz.Title</span>
                     <span class="badge bg-secondary">View</span>
                 </a>
+                
+                <a asp-controller="Question"
+                   asp-action="Create"
+                   asp-route-quizId="@quiz.Id"
+                   class="btn btn-outline-primary">
+                    + Add Question
+                </a>
             }
         </div>
     }

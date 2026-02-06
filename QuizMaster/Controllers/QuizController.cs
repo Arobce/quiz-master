@@ -36,7 +36,8 @@ public class QuizController : Controller
         await _quizService.CreateQuizAsync(model, User);
         return RedirectToAction("Index");
     }
-
+    
+    [HttpGet]
     public async Task<IActionResult> Details(int quizId)
     {
         try
