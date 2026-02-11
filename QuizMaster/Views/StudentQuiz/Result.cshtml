@@ -1,0 +1,45 @@
+@model QuizMaster.Models.ViewModel.Quiz.Student.StudentQuizResultViewModel
+
+@{
+    ViewData["Title"] = "Quiz Result";
+}
+
+<div class="container mt-4">
+    <h2>@Model.QuizTitle</h2>
+
+    <div class="alert alert-info">
+        <strong>Score:</strong> @Model.TotalScore / @Model.MaxScore
+    </div>
+
+    @foreach (var q in Model.Questions)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <p class="fw-bold">@q.QuestionText</p>
+
+                <p>
+                    <strong>Your Answer:</strong>
+                    @q.StudentAnswer
+                </p>
+
+                @if (q.CorrectAnswer != null)
+                {
+                    <p>
+                        <strong>Correct Answer:</strong>
+                        @q.CorrectAnswer
+                    </p>
+                }
+
+                <p>
+                    <strong>Score:</strong>
+                    @(q.Score?.ToString() ?? "Pending AI grading")
+                    / @q.Points
+                </p>
+            </div>
+        </div>
+    }
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Back to quizzes
+    </a>
+</div>

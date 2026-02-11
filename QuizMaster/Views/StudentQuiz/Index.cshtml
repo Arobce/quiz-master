@@ -1,0 +1,29 @@
+@model IEnumerable<QuizMaster.Models.ViewModel.Quiz.Student.StudentQuizListItemViewModel>
+
+@{
+    ViewData["Title"] = "Available Quizzes";
+}
+
+<div class="container mt-4">
+    <h2>Available Quizzes</h2>
+
+    <div class="list-group mt-3">
+        @foreach (var quiz in Model)
+        {
+            <div class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>@quiz.Title</strong>
+                    <div class="text-muted small">
+                        Total Points: @quiz.TotalPoints
+                    </div>
+                </div>
+
+                <a asp-action="Start"
+                   asp-route-quizId="@quiz.QuizId"
+                   class="btn btn-primary btn-sm">
+                    Start Quiz
+                </a>
+            </div>
+        }
+    </div>
+</div>

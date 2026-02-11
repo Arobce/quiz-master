@@ -74,6 +74,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/roshanchapagain/Documents/RiderProjects/QuizMaster/QuizMaster/Views/StudentQuiz/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3R1ZGVudFF1aXovSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/roshanchapagain/Documents/RiderProjects/QuizMaster/QuizMaster/Views/StudentQuiz/Result.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3R1ZGVudFF1aXovUmVzdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/roshanchapagain/Documents/RiderProjects/QuizMaster/QuizMaster/Views/StudentQuiz/Take.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3R1ZGVudFF1aXovVGFrZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/roshanchapagain/Documents/RiderProjects/QuizMaster/QuizMaster/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

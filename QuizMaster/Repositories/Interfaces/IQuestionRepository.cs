@@ -5,4 +5,6 @@ namespace QuizMaster.Repositories.Interfaces;
 public interface IQuestionRepository
 {
     Task AddAsync(Question question);
+    
+    Task<Question?> GetByIdAsync(int questionId);
 }

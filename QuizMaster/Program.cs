@@ -39,6 +39,9 @@ builder.Services.AddScoped<IQuizRepository, QuizRepository>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
 
+builder.Services.AddScoped<IStudentQuizService, StudentQuizService>();
+builder.Services.AddScoped<IQuizAttemptRepository, QuizAttemptRepository>();
+
 
 // Auth cookie
 builder.Services.ConfigureApplicationCookie(options =>

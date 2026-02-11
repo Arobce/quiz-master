@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using QuizMaster.Data;
+using QuizMaster.Models;
 using QuizMaster.Repositories.Interfaces;
 
 namespace QuizMaster.Repositories;
@@ -16,5 +18,10 @@ public class QuestionRepository : IQuestionRepository
     {
         _context.Questions.Add(question);
         await _context.SaveChangesAsync();
+    }
+
+    public Task<Question?> GetByIdAsync(int questionId)
+    {
+        return _context.Questions.Include(a => a.AnswerOptions).FirstOrDefaultAsync(q => q.Id == questionId);
     }
 }

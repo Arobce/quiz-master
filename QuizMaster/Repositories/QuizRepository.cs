@@ -34,4 +34,13 @@ public class QuizRepository : IQuizRepository
             .ThenInclude(q => q.AnswerOptions)
             .FirstOrDefaultAsync(q => q.Id == quizId);
     }
+
+    public async Task<IEnumerable<Quiz>> GetALlAsync()
+    {
+        return await _dbContext.Quizzes
+            .Include(q => q.Questions)
+            .ThenInclude(q => q.AnswerOptions)
+            .ToListAsync();
+    }
+    
 }

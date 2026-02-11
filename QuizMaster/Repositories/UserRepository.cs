@@ -28,4 +28,5 @@ public class UserRepository : IUserRepository
     {
         return _userManager.AddToRoleAsync(user, roleName);
     }
+    
 }

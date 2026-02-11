@@ -9,4 +9,5 @@ public interface IQuizRepository
     Task AddAsync(Quiz quiz);
     Task<IEnumerable<Quiz>> GetByTeacherIdAsync(string teacherId);
     Task<Quiz?> GetByIdAsync(int quizId);
+    Task<IEnumerable<Quiz>> GetALlAsync();
 }

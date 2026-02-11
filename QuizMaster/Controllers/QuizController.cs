@@ -38,11 +38,11 @@ public class QuizController : Controller
     }
     
     [HttpGet]
-    public async Task<IActionResult> Details(int quizId)
+    public async Task<IActionResult> Details(int id)
     {
         try
         {
-            var quiz = await _quizService.GetQuizDetailsAsync(quizId);
+            var quiz = await _quizService.GetQuizDetailsAsync(id);
             return View(quiz);
         }
         catch (Exception)

@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using QuizMaster.Models;
+using QuizMaster.Models.ViewModel.Question;
 using QuizMaster.Models.ViewModel.Quiz;
 using QuizMaster.Repositories.Interfaces;
 using QuizMaster.Services.Interfaces;
@@ -49,9 +50,27 @@ public class QuizService : IQuizService
         });
     }
 
-    public Task<QuizDetailsViewModel> GetQuizDetailsAsync(int quizId)
+    public async Task<QuizDetailsViewModel> GetQuizDetailsAsync(int quizId)
     {
-        throw new NotImplementedException();
+        var quiz = await _quizRepository.GetByIdAsync(quizId);
+        if (quiz == null)
+        {
+            throw new KeyNotFoundException($"Quiz {quizId} not found");
+        }
+
+        return new QuizDetailsViewModel
+        {
+            Id = quiz.Id,
+            Title = quiz.Title,
+            Questions = quiz.Questions?
+                .Select(q => new QuestionListItemViewModel
+                {
+                    Text = q.Text,
+                    Type = q.Type,
+                    Points = q.Points
+                })
+                .ToList() ?? new List<QuestionListItemViewModel>()
+        };
     }
     
     private string GetUserId(ClaimsPrincipal user)
