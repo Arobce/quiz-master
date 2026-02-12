@@ -72,6 +72,16 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // =======================
+// Creating Migrations & Updating DB (AFTER app build)
+// =======================
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+}
+
+// =======================
 // Seeding (AFTER app build)
 // =======================
 
@@ -83,15 +93,6 @@ using (var scope = app.Services.CreateScope())
 
 
 
-// =======================
-// Creating Migrations & Updating DB (AFTER app build)
-// =======================
-
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    db.Database.Migrate();
-}
 
 // =======================
 // Routing

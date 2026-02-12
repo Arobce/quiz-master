@@ -72,5 +72,16 @@
             document.getElementById("mcqOptions").style.display =
                 this.value === "MCQ" ? "block" : "none";
         });
+
+        document.querySelector("form").addEventListener("submit", function (e) {
+            var type = document.getElementById("questionType").value;
+            if (type === "MCQ") {
+                var selected = document.querySelector('input[name="CorrectOptionIndex"]:checked');
+                if (!selected) {
+                    e.preventDefault();
+                    alert("Please select the correct answer for the MCQ question.");
+                }
+            }
+        });
     </script>
 }

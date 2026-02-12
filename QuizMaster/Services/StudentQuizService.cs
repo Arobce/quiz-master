@@ -93,6 +93,11 @@ public class StudentQuizService : IStudentQuizService
     {
         var user = await _userManager.GetUserAsync(student);
         var attempt = await _quizAttemptRepository.GetByIdAsync(model.AttemptId);
+
+        if (attempt == null)
+        {
+            throw new InvalidOperationException("Quiz attempt not found.");
+        }
         
         // Ownership check
         if(attempt.StudentId != user.Id)
@@ -115,9 +120,17 @@ public class StudentQuizService : IStudentQuizService
                 answer.SelectedOptionId = answerVm.SelectedOptionId;
                 
                 // Get correct option
-                var correctOption = question.AnswerOptions.First(o => o.IsCorrect);
-                
-                answer.Score = correctOption.Id == answerVm.SelectedOptionId ? question.Points : 0;
+                var correctOption = question.AnswerOptions?.FirstOrDefault(o => o.IsCorrect);
+                var selectedOption = question.AnswerOptions?.FirstOrDefault(o => o.Id == answerVm.SelectedOptionId);
+
+                if (correctOption == null || selectedOption == null)
+                {
+                    answer.Score = 0;
+                }
+                else
+                {
+                    answer.Score = correctOption.Id == selectedOption.Id ? question.Points : 0;
+                }
                 answer.IsAiGraded = false;
             }
             else
@@ -130,10 +143,10 @@ public class StudentQuizService : IStudentQuizService
             }
             
             attempt.Answers.Add(answer);
-            attempt.SubmittedAt = DateTime.UtcNow;
-
-            await  _quizAttemptRepository.SaveAsync();
         }
+
+        attempt.SubmittedAt = DateTime.UtcNow;
+        await _quizAttemptRepository.SaveAsync();
     }
     
     // View result
@@ -151,10 +164,10 @@ public class StudentQuizService : IStudentQuizService
         {
             QuestionText = a.Question.Text,
             StudentAnswer = a.Question.Type == "MCQ"
-                ? a.Question.AnswerOptions.First(o => o.Id == a.SelectedOptionId).Text
+                ? (a.Question.AnswerOptions.FirstOrDefault(o => o.Id == a.SelectedOptionId)?.Text ?? "No answer")
                 : a.AnswerText,
             CorrectAnswer = a.Question.Type == "MCQ"
-                ? a.Question.AnswerOptions.First(o => o.IsCorrect).Text
+                ? (a.Question.AnswerOptions.FirstOrDefault(o => o.IsCorrect)?.Text ?? "N/A")
                 : "N/A",
             Points = a.Question.Points,
             Score = a.Score,
@@ -167,7 +180,7 @@ public class StudentQuizService : IStudentQuizService
             QuizTitle = attempt.Quiz.Title,
             TotalScore = attempt.Answers.Sum(a => a.Score ?? 0),
             Questions = questions,
-            MaxScore = questions.Sum(a => a.Score ?? 0),
+            MaxScore = questions.Sum(a => a.Points),
         };
     }
 }

@@ -24,6 +24,12 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Quiz" asp-action="Index">My Quizzes</a>
+                        </li>
+                    }
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
@@ -31,6 +37,12 @@
                 <ul class="navbar-nav ms-auto">
                     @if (User.Identity?.IsAuthenticated ?? false)
                     {
+                        @if (User.IsInRole("Teacher"))
+                        {
+                            <li class="nav-item me-2">
+                                <a class="btn btn-primary btn-sm" asp-controller="Quiz" asp-action="Create">+ Create Quiz</a>
+                            </li>
+                        }
                         <li class="nav-item d-flex align-items-center me-2">
                             <span class="navbar-text">Hello, @User.FullName()</span>
                         </li>
