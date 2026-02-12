@@ -1,0 +1,49 @@
+@model QuizMaster.Models.ViewModel.Quiz.QuizSubmissionDetailViewModel
+
+@{
+    ViewData["Title"] = "Submission Details";
+}
+
+<div class="container mt-4">
+    <h2>@Model.QuizTitle</h2>
+
+    <div class="alert alert-info">
+        <strong>Student:</strong> @Model.StudentName
+        <br/>
+        <strong>Score:</strong> @Model.TotalScore / @Model.MaxScore
+        <br/>
+        <strong>Submitted:</strong> @Model.SubmittedAt.ToString("g")
+    </div>
+
+    @foreach (var q in Model.Questions)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <p class="fw-bold">@q.QuestionText</p>
+
+                <p>
+                    <strong>Student's Answer:</strong>
+                    @(q.StudentAnswer ?? "No answer")
+                </p>
+
+                @if (q.CorrectAnswer != null)
+                {
+                    <p>
+                        <strong>Correct Answer:</strong>
+                        @q.CorrectAnswer
+                    </p>
+                }
+
+                <p>
+                    <strong>Score:</strong>
+                    @(q.Score?.ToString() ?? "Pending AI grading")
+                    / @q.Points
+                </p>
+            </div>
+        </div>
+    }
+
+    <a asp-action="Details" asp-route-id="@Model.QuizId" class="btn btn-outline-secondary">
+        &larr; Back to quiz
+    </a>
+</div>
