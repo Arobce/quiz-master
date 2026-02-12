@@ -1,0 +1,30 @@
+version: 0.2
+
+env:
+  variables:
+    DOTNET_VERSION: "10.0.101"
+
+phases:
+  install:
+    commands:
+      - echo Installing .NET $DOTNET_VERSION
+      - curl -sSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+      - chmod +x dotnet-install.sh
+      - ./dotnet-install.sh --version $DOTNET_VERSION
+      - export PATH="$PATH:$HOME/.dotnet"
+      - dotnet --version
+
+  pre_build:
+    commands:
+      - echo Restoring packages
+      - dotnet restore
+
+  build:
+    commands:
+      - echo Publishing application
+      - dotnet publish -c Release -o publish
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: publish
