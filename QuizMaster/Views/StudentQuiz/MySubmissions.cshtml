@@ -1,0 +1,36 @@
+@model IEnumerable<QuizMaster.Models.ViewModel.Quiz.Student.StudentSubmissionListItemViewModel>
+
+@{
+    ViewData["Title"] = "My Submissions";
+}
+
+<div class="container mt-4">
+    <h2>My Submissions</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info mt-3">
+            You haven't submitted any quizzes yet.
+            <a asp-controller="StudentQuiz" asp-action="Index">Browse available quizzes</a>
+        </div>
+    }
+    else
+    {
+        <div class="list-group mt-3">
+            @foreach (var submission in Model)
+            {
+                <a asp-action="Result"
+                   asp-route-attemptId="@submission.AttemptId"
+                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>@submission.QuizTitle</strong>
+                        <div class="text-muted small">
+                            Submitted: @submission.SubmittedAt.ToString("MMM dd, yyyy h:mm tt")
+                        </div>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">@submission.TotalScore / @submission.MaxScore</span>
+                </a>
+            }
+        </div>
+    }
+</div>
