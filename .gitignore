@@ -1,0 +1,21 @@
+## .NET build artifacts
+bin/
+obj/
+publish/
+publish.zip
+
+## IDE
+.idea/
+*.suo
+*.user
+*.sln.docstates
+.vs/
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Secrets
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
