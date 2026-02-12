@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      dotnet: 10.0 
+
+  build:
+    commands:
+      - echo Running tests...
+      - dotnet test --logger "trx;LogFileName=test-results.trx" --results-directory ./TestResults
+
+reports:
+  TestResults:
+    files:
+      - "**/*.trx"
+    base-directory: ./TestResults
+    file-format: VisualStudioTrx   # lets AWS display results natively
