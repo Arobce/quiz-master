@@ -8,20 +8,19 @@ phases:
   install:
     commands:
       - echo Installing .NET $DOTNET_VERSION
+      - export HOME=/root
       - curl -sSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
       - chmod +x dotnet-install.sh
-      - ./dotnet-install.sh --version $DOTNET_VERSION
-      - export PATH="$PATH:$HOME/.dotnet"
+      - ./dotnet-install.sh --version $DOTNET_VERSION --install-dir /root/.dotnet
+      - export PATH="$PATH:/root/.dotnet"
       - dotnet --version
 
   pre_build:
     commands:
-      - echo Restoring packages
       - dotnet restore
 
   build:
     commands:
-      - echo Publishing application
       - dotnet publish -c Release -o publish
 
 artifacts:
