@@ -1,8 +1,56 @@
-﻿@{
+@model IEnumerable<QuizMaster.Models.ViewModel.Home.HomeQuizViewModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4">
+    <div class="text-center mb-4">
+        <h1 class="display-5 fw-bold">QuizMaster</h1>
+        <p class="lead text-muted">Browse available quizzes</p>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center text-muted py-5">
+            <h4>No quizzes available yet.</h4>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var quiz in Model)
+            {
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@quiz.Title</h5>
+                            <p class="card-text text-muted flex-grow-1">
+                                @(quiz.Description.Length > 120 ? quiz.Description[..120] + "..." : quiz.Description)
+                            </p>
+                            <div class="mb-3">
+                                <small class="text-muted d-block">
+                                    <strong>By:</strong> @quiz.TeacherName
+                                </small>
+                                <small class="text-muted d-block">
+                                    <strong>Questions:</strong> @quiz.QuestionCount &bull;
+                                    <strong>Points:</strong> @quiz.TotalPoints
+                                </small>
+                            </div>
+                            @if (User.IsInRole("Student"))
+                            {
+                                <a asp-controller="StudentQuiz" asp-action="Start" asp-route-quizId="@quiz.Id"
+                                   class="btn btn-primary mt-auto">Start Quiz</a>
+                            }
+                            else if (User.IsInRole("Teacher"))
+                            {
+                                <a asp-controller="Quiz" asp-action="Details" asp-route-id="@quiz.Id"
+                                   class="btn btn-outline-secondary mt-auto">View Details</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 </div>

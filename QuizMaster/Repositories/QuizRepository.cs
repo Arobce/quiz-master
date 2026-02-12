@@ -38,6 +38,7 @@ public class QuizRepository : IQuizRepository
     public async Task<IEnumerable<Quiz>> GetALlAsync()
     {
         return await _dbContext.Quizzes
+            .Include(q => q.Teacher)
             .Include(q => q.Questions)
             .ThenInclude(q => q.AnswerOptions)
             .ToListAsync();
