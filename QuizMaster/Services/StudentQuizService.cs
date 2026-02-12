@@ -129,8 +129,9 @@ public class StudentQuizService : IStudentQuizService
                 answer.Score = question.Points;
             }
             
+            attempt.Answers.Add(answer);
             attempt.SubmittedAt = DateTime.UtcNow;
-           
+
             await  _quizAttemptRepository.SaveAsync();
         }
     }

@@ -7,51 +7,121 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>@Model.Title</h2>
-
-        <a asp-controller="Question"
-           asp-action="Create"
-           asp-route-quizId="@Model.Id"
-           class="btn btn-primary">
-            + Add Question
-        </a>
     </div>
 
-    @if (!Model.Questions.Any())
-    {
-        <div class="alert alert-warning">
-            No questions have been added yet.
-        </div>
-    }
-    else
-    {
-        <div class="card">
-            <div class="card-body">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Question</th>
-                        <th>Type</th>
-                        <th>Points</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var q in Model.Questions)
-                    {
-                        <tr>
-                            <td>@q.Text</td>
-                            <td>@q.Type</td>
-                            <td>@q.Points</td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
+    <ul class="nav nav-tabs" id="quizTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="questions-tab" data-bs-toggle="tab"
+                    data-bs-target="#questions" type="button" role="tab">
+                Questions
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="submissions-tab" data-bs-toggle="tab"
+                    data-bs-target="#submissions" type="button" role="tab">
+                Submissions
+                @if (Model.Submissions.Any())
+                {
+                    <span class="badge bg-secondary ms-1">@Model.Submissions.Count</span>
+                }
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content pt-3" id="quizTabsContent">
+        <!-- Questions Tab -->
+        <div class="tab-pane fade show active" id="questions" role="tabpanel">
+            <div class="d-flex justify-content-end mb-3">
+                <a asp-controller="Question"
+                   asp-action="Create"
+                   asp-route-quizId="@Model.Id"
+                   class="btn btn-primary">
+                    + Add Question
+                </a>
             </div>
+
+            @if (!Model.Questions.Any())
+            {
+                <div class="alert alert-warning">
+                    No questions have been added yet.
+                </div>
+            }
+            else
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Question</th>
+                                <th>Type</th>
+                                <th>Points</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var q in Model.Questions)
+                            {
+                                <tr>
+                                    <td>@q.Text</td>
+                                    <td>@q.Type</td>
+                                    <td>@q.Points</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
         </div>
-    }
+
+        <!-- Submissions Tab -->
+        <div class="tab-pane fade" id="submissions" role="tabpanel">
+            @if (!Model.Submissions.Any())
+            {
+                <div class="alert alert-info">
+                    No submissions yet.
+                </div>
+            }
+            else
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Score</th>
+                                <th>Submitted At</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var s in Model.Submissions)
+                            {
+                                <tr>
+                                    <td>@s.StudentName</td>
+                                    <td>@s.TotalScore / @s.MaxScore</td>
+                                    <td>@s.SubmittedAt.ToString("g")</td>
+                                    <td>
+                                        <a asp-action="Submission"
+                                           asp-route-id="@s.AttemptId"
+                                           class="btn btn-sm btn-outline-primary">
+                                            View Details
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 
     <div class="mt-3">
         <a asp-action="Index" class="btn btn-outline-secondary">
-            ← Back to quizzes
+            &larr; Back to quizzes
         </a>
     </div>
 </div>

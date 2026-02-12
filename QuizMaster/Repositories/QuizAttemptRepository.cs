@@ -23,10 +23,24 @@ public class QuizAttemptRepository : IQuizAttemptRepository
     public Task<QuizAttempt?> GetByIdAsync(int quizAttemptId)
     {
         return _dbContext.QuizAttempts
-            .Include(q=> q.Quiz)
-            .ThenInclude(q => q.Questions)
-            .ThenInclude(q => q.AnswerOptions)
+            .Include(q => q.Student)
+            .Include(q => q.Quiz)
+                .ThenInclude(q => q.Questions)
+                .ThenInclude(q => q.AnswerOptions)
+            .Include(q => q.Answers)
+                .ThenInclude(a => a.Question)
+                .ThenInclude(q => q.AnswerOptions)
             .FirstOrDefaultAsync(q => q.Id == quizAttemptId);
+    }
+
+    public Task<List<QuizAttempt>> GetByQuizIdAsync(int quizId)
+    {
+        return _dbContext.QuizAttempts
+            .Include(a => a.Student)
+            .Include(a => a.Answers)
+                .ThenInclude(sa => sa.Question)
+            .Where(a => a.QuizId == quizId)
+            .ToListAsync();
     }
     
     public async Task SaveAsync()

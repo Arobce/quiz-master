@@ -81,6 +81,18 @@ using (var scope = app.Services.CreateScope())
     await RoleSeeder.SeedRolesAsync(services);
 }
 
+
+
+// =======================
+// Creating Migrations & Updating DB (AFTER app build)
+// =======================
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+}
+
 // =======================
 // Routing
 // =======================

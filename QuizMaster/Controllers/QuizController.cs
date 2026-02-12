@@ -50,4 +50,18 @@ public class QuizController : Controller
             return NotFound();
         }
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Submission(int id)
+    {
+        try
+        {
+            var detail = await _quizService.GetSubmissionDetailAsync(id);
+            return View(detail);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+    }
 }

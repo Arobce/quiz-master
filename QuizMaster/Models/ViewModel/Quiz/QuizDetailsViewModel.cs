@@ -9,4 +9,7 @@ public class QuizDetailsViewModel
 
     public List<QuestionListItemViewModel> Questions { get; set; }
         = new();
+
+    public List<QuizSubmissionViewModel> Submissions { get; set; }
+        = new();
 }
