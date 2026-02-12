@@ -12,6 +12,7 @@ phases:
       - chmod +x dotnet-install.sh
       - ./dotnet-install.sh --version 10.0.101 --install-dir /opt/dotnet
       - export PATH="/opt/dotnet:/opt/dotnet/tools:$PATH"
+      - echo '{"sdk":{"version":"10.0.101","rollForward":"latestMajor"}}' > /codebuild/global.json
       - dotnet --version
   build:
     commands:
