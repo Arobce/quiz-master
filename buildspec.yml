@@ -17,8 +17,8 @@ phases:
   build:
     commands:
       - export PATH="/opt/dotnet:/opt/dotnet/tools:$PATH"
-      - dotnet restore
-      - dotnet publish -c Release -o publish
+      - dotnet restore QuizMaster/QuizMaster.csproj
+      - dotnet publish QuizMaster/QuizMaster.csproj -c Release -o publish
 
 artifacts:
   files:
