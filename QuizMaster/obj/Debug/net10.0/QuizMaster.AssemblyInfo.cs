@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuizMaster")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e574fae7b1d1579f11afb72a09c74183434beecc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d5ed845813d44fadd811b0ca79d1e17a86898a0")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuizMaster")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuizMaster")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
