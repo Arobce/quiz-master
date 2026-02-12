@@ -7,5 +7,6 @@ public interface IQuizAttemptRepository
     Task AddAsync(QuizAttempt quizAttempt);
     Task<QuizAttempt?> GetByIdAsync(int quizAttemptId);
     Task<List<QuizAttempt>> GetByQuizIdAsync(int quizId);
+    Task<List<QuizAttempt>> GetByStudentIdAsync(string studentId);
     Task SaveAsync();
 }

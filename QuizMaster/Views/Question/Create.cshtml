@@ -11,10 +11,12 @@
 
             <form asp-action="Create" method="post">
                 <input type="hidden" asp-for="QuizId" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="mb-3">
                     <label asp-for="Text" class="form-label"></label>
                     <textarea asp-for="Text" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Text" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
@@ -24,11 +26,13 @@
                         <option value="MCQ">Multiple Choice</option>
                         <option value="Text">Text / Descriptive</option>
                     </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Points" class="form-label"></label>
                     <input asp-for="Points" class="form-control" />
+                    <span asp-validation-for="Points" class="text-danger"></span>
                 </div>
 
                 <!-- MCQ OPTIONS -->
@@ -67,6 +71,7 @@
 </div>
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <script>
         document.getElementById("questionType").addEventListener("change", function () {
             document.getElementById("mcqOptions").style.display =

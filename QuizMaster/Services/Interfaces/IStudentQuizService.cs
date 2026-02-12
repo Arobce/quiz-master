@@ -10,4 +10,5 @@ public interface IStudentQuizService
     Task<StudentTakeQuizViewModel> GetQuizForAttemptAsync(int attemptId);
     Task SubmitQuizAsync(SubmitQuizViewModel model, ClaimsPrincipal student);
     Task<StudentQuizResultViewModel> GetResultAsync(int attemptId, ClaimsPrincipal student);
+    Task<IEnumerable<StudentSubmissionListItemViewModel>> GetMySubmissionsAsync(ClaimsPrincipal student);
 }

@@ -149,6 +149,21 @@ public class StudentQuizService : IStudentQuizService
         await _quizAttemptRepository.SaveAsync();
     }
     
+    public async Task<IEnumerable<StudentSubmissionListItemViewModel>> GetMySubmissionsAsync(ClaimsPrincipal student)
+    {
+        var user = await _userManager.GetUserAsync(student);
+        var attempts = await _quizAttemptRepository.GetByStudentIdAsync(user.Id);
+
+        return attempts.Select(a => new StudentSubmissionListItemViewModel
+        {
+            AttemptId = a.Id,
+            QuizTitle = a.Quiz.Title,
+            TotalScore = a.Answers.Sum(ans => ans.Score ?? 0),
+            MaxScore = a.Answers.Sum(ans => ans.Question.Points),
+            SubmittedAt = a.SubmittedAt,
+        });
+    }
+
     // View result
     public async Task<StudentQuizResultViewModel> GetResultAsync(int attemptId, ClaimsPrincipal student)
     {
