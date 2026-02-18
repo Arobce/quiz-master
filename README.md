@@ -30,7 +30,8 @@ All dependencies use interface-based DI registered as scoped services.
 
 ## AWS Architecture
 
-<!-- TODO: Add architecture diagram -->
+<img width="684" height="296" alt="image" src="https://github.com/user-attachments/assets/99d9ac90-b130-4d34-9b13-cb0c558add62" />
+
 
 - **CI/CD:** AWS CodePipeline connected to GitHub — triggers on push
 - **Build & Test:** AWS CodeBuild builds the application and runs tests
