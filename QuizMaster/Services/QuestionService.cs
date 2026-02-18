@@ -21,7 +21,7 @@ public class QuestionService : IQuestionService
             QuizId = model.QuizId,
             Text = model.Text,
             Type = model.Type,
-            Points = model.Points
+            Points = model.Points!.Value
         };
 
         if (model.Type == "MCQ")

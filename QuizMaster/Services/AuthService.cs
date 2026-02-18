@@ -23,9 +23,7 @@ public class AuthService : IAuthService
         _userManager = userManager;
     }
 
-    // ----------------------------
-    // REGISTER
-    // ----------------------------
+    // Register
     public async Task<(bool IsAuthenticated, string Error)> RegisterAsync(RegisterViewModel model)
     {
         var allowedRoles = new[] { "Teacher", "Student" };
@@ -52,9 +50,7 @@ public class AuthService : IAuthService
         return (true, user.Id);
     }
 
-    // ----------------------------
-    // LOGIN
-    // ----------------------------
+   // Login
     public async Task<bool> LoginAsync(LoginViewModel model)
     {
         var result = await _signInManager.PasswordSignInAsync(
@@ -66,7 +62,7 @@ public class AuthService : IAuthService
         if (!result.Succeeded)
             return false;
 
-        // 👇 Fetch user + refresh claims
+        // Fetch user + refresh claims
         var user = await _userManager.FindByEmailAsync(model.Email);
         if (user != null)
         {
@@ -76,17 +72,13 @@ public class AuthService : IAuthService
         return true;
     }
 
-    // ----------------------------
-    // LOGOUT
-    // ----------------------------
+    // Logout
     public async Task LogoutAsync()
     {
         await _signInManager.SignOutAsync();
     }
 
-    // ----------------------------
-    // CLAIM HANDLER
-    // ----------------------------
+    // Claims
     private async Task EnsureFullNameClaimAsync(ApplicationUser user)
     {
         var claims = await _userManager.GetClaimsAsync(user);

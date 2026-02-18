@@ -42,7 +42,18 @@ public class QuizAttemptRepository : IQuizAttemptRepository
             .Where(a => a.QuizId == quizId)
             .ToListAsync();
     }
-    
+
+    public Task<List<QuizAttempt>> GetByStudentIdAsync(string studentId)
+    {
+        return _dbContext.QuizAttempts
+            .Include(a => a.Quiz)
+            .Include(a => a.Answers)
+                .ThenInclude(sa => sa.Question)
+            .Where(a => a.StudentId == studentId && a.SubmittedAt != default)
+            .OrderByDescending(a => a.SubmittedAt)
+            .ToListAsync();
+    }
+
     public async Task SaveAsync()
     {
         await _dbContext.SaveChangesAsync();

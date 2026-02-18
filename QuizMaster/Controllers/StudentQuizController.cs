@@ -43,6 +43,12 @@ public class StudentQuizController : Controller
         return RedirectToAction(nameof(Result), new { attemptId = model.AttemptId });
     }
     
+    public async Task<IActionResult> MySubmissions()
+    {
+        var submissions = await _studentQuizService.GetMySubmissionsAsync(User);
+        return View(submissions);
+    }
+
     // View quiz result
     public async Task<IActionResult> Result(int attemptId)
     {
