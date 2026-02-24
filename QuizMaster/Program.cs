@@ -67,6 +67,26 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Security headers middleware (CSP + Clickjacking protection)
+app.Use(async (context, next) =>
+{
+    // Clickjacking protection
+    context.Response.Headers["X-Frame-Options"] = "DENY";
+
+    // Basic hardening headers
+    context.Response.Headers["X-Content-Type-Options"] = "nosniff";
+    context.Response.Headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
+
+    // CSP (includes modern clickjacking protection via frame-ancestors)
+    context.Response.Headers["Content-Security-Policy"] =
+        "default-src 'self'; " +
+        "frame-ancestors 'none'; " +
+        "object-src 'none'; " +
+        "base-uri 'self';";
+
+    await next();
+});
+
 
 app.UseAuthentication();
 app.UseAuthorization();
